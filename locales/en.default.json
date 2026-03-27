@@ -1,0 +1,68 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Page not found.",
+    "back_to_shopping": "Back to shopping"
+  },
+  "blog": {
+    "article_comments": "Comments",
+    "article_metadata_html": "{{ date }} by {{ author }}",
+    "comment_form_body": "Comment",
+    "comment_form_email": "Email",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Post",
+    "comment_form_title": "Add a comment"
+  },
+  "cart": {
+    "checkout": "Checkout",
+    "title": "Cart",
+    "update": "Update",
+    "remove": "Remove"
+  },
+  "customers": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "title": "Login"
+    }
+  },
+  "collections": {
+    "title": "Collections"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Add to Apple Wallet",
+    "card": "Gift card",
+    "expired": "This gift card has expired",
+    "expires_on": "Expires on {{ expires_on }}",
+    "use_at_checkout": "Use this gift card at checkout"
+  },
+  "password": {
+    "title": "This shop is private",
+    "password": "Password",
+    "enter": "Enter"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search articles, pages, or products",
+    "submit": "Search",
+    "no_results_html": "No results found for {{ terms }}",
+    "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "sections": {
+    "biometric_cards": {
+      "sleep_title": "Get the best sleep of your life",
+      "sleep_subtitle": "Sleep and Rest",
+      "wellness_title": "Don't just live longer, live healthier",
+      "wellness_subtitle": "Wellness and Longevity",
+      "activity_title": "Bring your fitness goals into focus",
+      "activity_subtitle": "Activity and Fitness",
+      "heart_title": "Listen to what your heart is telling you",
+      "heart_subtitle": "Heart Health",
+      "womens_title": "Understand the ins and outs of women's health",
+      "womens_subtitle": "Women's Health",
+      "stress_title": "Put your stress to the test",
+      "stress_subtitle": "Stress"
+    }
+  }
+}

@@ -1,0 +1,189 @@
+<header class="soma-header {% if section.settings.enable_sticky_header %}soma-header--sticky{% endif %}">
+  <div class="soma-header__container">
+    
+    <!-- Left: Navigation -->
+    <nav class="soma-header__nav" aria-label="Main Navigation">
+      <ul class="soma-header__nav-list">
+        {% assign menu = section.settings.menu | default: 'main-menu' %}
+        {% for link in linklists[menu].links %}
+          <li class="soma-header__nav-item">
+            <a href="{{ link.url }}" class="soma-header__nav-link" {% if link.active %}aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    
+    <!-- Center: Logo -->
+    <div class="soma-header__logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} Home">
+         <!-- Assuming Logo.svg exists per the prompt. It's safe to use asset_url -->
+         <img src="{{ 'Logo.svg' | asset_url }}" alt="{{ shop.name }}" width="120" height="auto" loading="eager">
+      </a>
+    </div>
+    
+    <!-- Right: Icons (Search, Cart, Account) -->
+    <div class="soma-header__icons">
+      <!-- Search Icon -->
+      <a href="{{ routes.search_url }}" class="soma-header__icon" aria-label="Search">
+         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </a>
+      
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="soma-header__icon" aria-label="Account">
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      {% endif %}
+      
+      <a href="{{ routes.cart_url }}" class="soma-header__icon" aria-label="Cart">
+         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{% stylesheet %}
+  .soma-header {
+    height: 80px;
+    background-color: var(--bg-primary, #F7F1E6);
+    border-bottom: 1px solid var(--border-subtle, rgba(74, 71, 65, 0.1));
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  
+  .soma-header--sticky {
+    position: sticky;
+    top: 0;
+  }
+  
+  .soma-header--scrolled {
+    background-color: transparent;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+
+  .soma-header__container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Left: Navigation */
+  .soma-header__nav {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .soma-header__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
+  .soma-header__nav-link {
+    font-family: var(--font-tech, sans-serif);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary, #151619);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .soma-header__nav-link:hover, .soma-header__nav-link[aria-current="page"] {
+    opacity: 0.6;
+  }
+  
+  /* Center: Logo */
+  .soma-header__logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .soma-header__logo img {
+    max-height: 40px;
+    display: block;
+  }
+
+  /* Right: Icons */
+  .soma-header__icons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .soma-header__icon {
+    color: var(--text-primary, #151619);
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+  }
+  .soma-header__icon:hover {
+    opacity: 0.6;
+  }
+  
+  /* Ensure interactive elements focus states for accessibility */
+  .soma-header a:focus-visible {
+    outline: 2px solid var(--accent-olive, #4A4741);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.soma-header--sticky');
+    if (!header) return;
+    
+    // Check scroll on mount
+    const checkScroll = () => {
+      if (window.scrollY > 10) {
+        header.classList.add('soma-header--scrolled');
+      } else {
+        header.classList.remove('soma-header--scrolled');
+      }
+    };
+    
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    checkScroll();
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Enable sticky header",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soma Header"
+    }
+  ]
+}
+{% endschema %}

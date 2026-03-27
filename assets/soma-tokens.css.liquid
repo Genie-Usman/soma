@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'AkkuratLL';
+  src: url('{{ "AkkuratLL.woff2" | asset_url }}') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Editorial New';
+  src: url('{{ "EditorialNew.woff2" | asset_url }}') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-primary: #F7F1E6;
+  --text-primary: #151619;
+  --accent-olive: #4A4741;
+  --border-subtle: rgba(74, 71, 65, 0.1);
+  --font-tech: 'AkkuratLL', sans-serif;
+  --font-narrative: 'Editorial New', serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-tech);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}

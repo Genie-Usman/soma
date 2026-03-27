@@ -1,0 +1,1 @@
+/run/media/usman/New Volume/Web Development/Shopify/aura/AGENTS.md

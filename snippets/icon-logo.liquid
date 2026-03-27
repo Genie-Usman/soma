@@ -1,0 +1,8 @@
+{% doc %}
+  Renders the main logo of the site.
+
+  @example
+  {% render 'icon-logo' %}
+{% enddoc %}
+
+<img src="{{ 'Logo.svg' | asset_url }}" alt="{{ shop.name }}" width="120" height="auto" loading="eager" class="soma-icon-logo">

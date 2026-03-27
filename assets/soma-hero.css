@@ -1,0 +1,315 @@
+/* Core Layout */
+.soma-hero {
+  position: relative;
+  background-color: var(--bg-primary, #F7F1E6);
+  width: 100%;
+  overflow: hidden;
+}
+
+.soma-hero--h-svh {
+  height: calc(100vh - 80px);
+  min-height: 40em;
+}
+@supports (height: 100dvh) {
+  .soma-hero--h-svh {
+    height: calc(100dvh - 80px);
+  }
+}
+
+.soma-hero__grid-container {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Video / Media Layer */
+.soma-hero__media-backdrop {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.soma-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.soma-hero__video--mobile {
+  display: block;
+}
+.soma-hero__video--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .soma-hero__media-backdrop {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    margin: 0 1.5rem;
+    width: auto;
+  }
+  .soma-hero__video--mobile {
+    display: none;
+  }
+  .soma-hero__video--desktop {
+    display: block;
+  }
+}
+
+/* Overlay Layer */
+.soma-hero__overlay {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  z-index: 20;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass to video if any, we'll restore pointer-events on content */
+}
+
+.soma-hero__content-grid {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .soma-hero__content-grid {
+    padding-left: 3rem;
+    padding-bottom: 2rem;
+    justify-content: flex-end;
+  }
+}
+
+.soma-hero__main-content {
+  pointer-events: auto;
+  max-width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .soma-hero__main-content {
+    max-width: 540px;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 27.5vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .soma-hero__main-content {
+    max-width: 46%;
+    margin-top: 0;
+  }
+}
+
+/* Typography & Branding */
+.soma-hero__logo-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.soma-hero__logo-wrap img, .soma-hero__logo-wrap svg {
+  height: 24px;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .soma-hero__logo-wrap {
+    align-items: flex-start;
+  }
+}
+
+.soma-hero__subtitle {
+  font-family: var(--font-tech, 'AkkuratLL', sans-serif);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary, #151619);
+  margin-bottom: 0.5rem;
+}
+
+.soma-hero__headline {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  margin: 0 0 1.25rem;
+  color: var(--text-primary, #151619);
+}
+
+@media (min-width: 768px) {
+  .soma-hero__headline {
+    font-size: 3.75rem;
+  }
+}
+@media (min-width: 1024px) {
+  .soma-hero__headline {
+    font-size: 5rem;
+  }
+}
+
+.soma-hero__headline-bold {
+  font-family: var(--font-narrative, 'Editorial New', serif);
+  font-weight: bold;
+}
+
+.soma-hero__headline-italic {
+  font-family: var(--font-narrative, 'Editorial New', serif);
+  font-style: italic;
+  font-weight: normal;
+  background: linear-gradient(to bottom right, #151619, #4A4741);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.soma-hero__br-desktop {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .soma-hero__br-desktop {
+    display: block;
+  }
+}
+
+/* CTA */
+.soma-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #151619; /* Text color as bg */
+  color: #F7F1E6; /* Bg color as text */
+  font-family: var(--font-tech, 'AkkuratLL', sans-serif);
+  font-weight: bold;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.05em;
+}
+
+.soma-hero__btn:hover {
+  background-color: var(--accent-olive, #4A4741);
+}
+
+/* Chiclet (Floating Card) */
+.soma-hero__chiclet-wrapper {
+  margin-top: 1.5rem;
+  padding: 0 1.25rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 30;
+}
+
+@media (min-width: 768px) {
+  .soma-hero__chiclet-wrapper {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 2rem;
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .soma-hero__chiclet-wrapper {
+    right: 3.5rem;
+    bottom: 3.5rem;
+  }
+}
+
+.soma-hero__chiclet {
+  display: inline-block;
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 0.25rem;
+  pointer-events: auto;
+}
+
+.soma-hero__chiclet-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 22, 25, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 0.75rem;
+  z-index: 10;
+}
+
+.soma-hero__chiclet-inner {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: stretch;
+}
+
+.soma-hero__chiclet-image {
+  flex: 0 0 176px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+
+.soma-hero__chiclet-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.soma-hero__chiclet-image .placeholder-media {
+  width: 100%;
+  height: 100%;
+  background-color: var(--border-subtle);
+}
+
+.soma-hero__chiclet-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+}
+
+.soma-hero__chiclet-title {
+  font-family: var(--font-tech, 'AkkuratLL', sans-serif);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: #F7F1E6;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.soma-hero__chiclet-cta {
+  font-family: var(--font-tech, 'AkkuratLL', sans-serif);
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #F7F1E6;
+}
+
+/* Animations reset */
+.motionComponent {
+  opacity: 0;
+}

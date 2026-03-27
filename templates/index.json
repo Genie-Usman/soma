@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "hero": {
+      "type": "soma-hero-v1",
+      "settings": {}
+    },
+    "biometric_cards": {
+      "type": "soma-biometric-cards",
+      "settings": {},
+      "blocks": {
+        "sleep": {
+          "type": "biometric_feature",
+          "settings": {
+            "subtitle": "t:sections.biometric_cards.sleep_subtitle",
+            "title": "t:sections.biometric_cards.sleep_title"
+          }
+        },
+        "wellness": {
+          "type": "biometric_feature",
+          "settings": {
+            "subtitle": "t:sections.biometric_cards.wellness_subtitle",
+            "title": "t:sections.biometric_cards.wellness_title"
+          }
+        }
+      },
+      "block_order": [
+        "sleep",
+        "wellness"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "biometric_cards"
+  ]
+}

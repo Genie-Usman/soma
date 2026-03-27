@@ -1,0 +1,139 @@
+{{ 'soma-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="soma-hero soma-hero--h-svh" data-cy="home-hero">
+  <div class="soma-hero__grid-container">
+    
+    <!-- Background Video / Media Layer -->
+    <div class="soma-hero__media-backdrop">
+      {%- if section.settings.desktop_video != blank -%}
+        {{ section.settings.desktop_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'soma-hero__video soma-hero__video--desktop' }}
+      {%- elsif section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1920 | image_tag: class: 'soma-hero__video soma-hero__video--desktop', loading: 'eager' }}
+      {%- endif -%}
+
+      {%- if section.settings.mobile_video != blank -%}
+        {{ section.settings.mobile_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'soma-hero__video soma-hero__video--mobile' }}
+      {%- endif -%}
+    </div>
+
+    <!-- Content Overlay Layer -->
+    <div class="soma-hero__overlay">
+      <div class="soma-hero__content-grid">
+        
+        <!-- Main Text Content -->
+        <div class="soma-hero__main-content motionComponent">
+          <div class="soma-hero__logo-wrap">
+             <span class="soma-hero__subtitle">{{ section.settings.subtitle | default: 'Soma Ring 1' }}</span>
+             {% render 'icon-logo' %}
+          </div>
+          <h1 class="soma-hero__headline">
+            <span class="soma-hero__headline-bold">Sleeker.<br class="soma-hero__br-desktop">Smarter.</span><br>
+            <em class="soma-hero__headline-italic motionComponent">Made for you.</em>
+          </h1>
+          <div class="soma-hero__cta-wrap motionComponent">
+            <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="soma-hero__btn soma-hero__btn--primary">
+              {{ section.settings.button_label | default: 'Discover Soma Ring 1' }}
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Chiclet Floating Card -->
+  <div class="soma-hero__chiclet-wrapper motionComponent">
+    <a href="{{ section.settings.chiclet_link | default: routes.all_products_collection_url }}" class="soma-hero__chiclet">
+      <div class="soma-hero__chiclet-bg"></div>
+      <div class="soma-hero__chiclet-inner">
+        <div class="soma-hero__chiclet-image">
+           {%- if section.settings.chiclet_image != blank -%}
+             {{ section.settings.chiclet_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+           {%- else -%}
+             <div class="placeholder-media"></div>
+           {%- endif -%}
+        </div>
+        <div class="soma-hero__chiclet-content">
+          <p class="soma-hero__chiclet-title">{{ section.settings.chiclet_title | default: 'Soma Ring 1 Ceramic' }}</p>
+          <span class="soma-hero__chiclet-cta">Shop Now</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- GSAP Animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const initHeroGSAP = setInterval(() => {
+      if (window.gsap) {
+        clearInterval(initHeroGSAP);
+        gsap.fromTo(".soma-hero .motionComponent", 
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2 }
+        );
+      }
+    }, 100);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Hero V1",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image Fallback"
+    },
+    {
+      "type": "video",
+      "id": "desktop_video",
+      "label": "Desktop Video"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "Mobile Video"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Discover Soma Ring 1"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Chiclet Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "chiclet_image",
+      "label": "Chiclet Image"
+    },
+    {
+      "type": "text",
+      "id": "chiclet_title",
+      "label": "Chiclet Title",
+      "default": "Soma Ring 1 Ceramic"
+    },
+    {
+      "type": "url",
+      "id": "chiclet_link",
+      "label": "Chiclet Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soma Hero V1"
+    }
+  ]
+}
+{% endschema %}

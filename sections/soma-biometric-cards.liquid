@@ -1,0 +1,218 @@
+<div id="soma-biometric-cards-{{ section.id }}" class="soma-biometrics" style="--bg: {{ settings.background_color }}; --text: {{ settings.foreground_color }}; --accent: {{ settings.accent_color }}">
+  <div class="soma-biometrics__container">
+    {% if section.settings.title != blank %}
+      <h2 class="soma-biometrics__main-title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="soma-biometrics__cards">
+      {% for block in section.blocks %}
+        <div class="soma-card soma-card--{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="soma-card__content">
+            <span class="soma-card__subtitle">{{ block.settings.subtitle }}</span>
+            <h3 class="soma-card__title">{{ block.settings.title }}</h3>
+          </div>
+          {% if block.settings.image != blank %}
+            <div class="soma-card__image-wrapper">
+              {{ block.settings.image | image_url: width: 800 | image_tag: class: 'soma-card__image', loading: 'lazy' }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .soma-biometrics {
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 6rem 2rem;
+    overflow: hidden;
+  }
+  .soma-biometrics__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .soma-biometrics__main-title {
+    font-family: {{ settings.type_primary_font.family | default: '"Editorial New", serif' }};
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: var(--text);
+  }
+  .soma-biometrics__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .soma-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0; /* Hidden initially for GSAP */
+    transform: translateY(50px);
+  }
+  .soma-card__content {
+    margin-bottom: 2rem;
+  }
+  .soma-card__subtitle {
+    font-family: {{ settings.type_secondary_font.family | default: '"AkkuratLL", sans-serif' }};
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .soma-card__title {
+    font-family: {{ settings.type_primary_font.family | default: '"Editorial New", serif' }};
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--text);
+  }
+  .soma-card__image-wrapper {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  .soma-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .soma-card {
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .soma-card:nth-child(even) {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+    .soma-card__content {
+      flex: 1;
+      padding: 0 4rem;
+      margin-bottom: 0;
+    }
+    .soma-card__image-wrapper {
+      flex: 1.5;
+    }
+  }
+</style>
+
+<!-- Load GSAP locally or via CDN. Since this is an agentic snippet, we use a reliable CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Wait for GSAP to load
+    const initGSAP = setInterval(() => {
+      if (window.gsap && window.ScrollTrigger) {
+        clearInterval(initGSAP);
+        gsap.registerPlugin(ScrollTrigger);
+
+        const cards = document.querySelectorAll('#soma-biometric-cards-{{ section.id }} .soma-card');
+        
+        cards.forEach((card) => {
+          gsap.to(card, {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          });
+          
+          // Smooth parallax on the image
+          const image = card.querySelector('.soma-card__image');
+          if (image) {
+            gsap.fromTo(image, 
+              { scale: 1.1 },
+              {
+                scale: 1,
+                duration: 1.5,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 1
+                }
+              }
+            );
+          }
+        });
+      }
+    }, 100);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Biometric Cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Oura Membership gives your body a voice"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "biometric_feature",
+      "name": "Biometric Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "t:sections.biometric_cards.sleep_subtitle"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "t:sections.biometric_cards.sleep_title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feature Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Soma Biometric Cards",
+      "blocks": [
+        {
+          "type": "biometric_feature",
+          "settings": {
+            "subtitle": "t:sections.biometric_cards.sleep_subtitle",
+            "title": "t:sections.biometric_cards.sleep_title"
+          }
+        },
+        {
+          "type": "biometric_feature",
+          "settings": {
+            "subtitle": "t:sections.biometric_cards.wellness_subtitle",
+            "title": "t:sections.biometric_cards.wellness_title"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
